@@ -1,14 +1,18 @@
 CheckCipher - TLS Cipher Suite Scanner
 --------------------------------------
 A Java-based tool for scanning which TLS cipher suites a target host:port supports. 
-It creates a custom SSL context from a provided keystore/truststore and tests each supported cipher by attempting a full TLS handshake.
+It creates a custom SSL context from a provided dummy keystore/truststore and tests each supported cipher by attempting a TLS handshake.
 
 Features
 --------
-TLS 1.2 and 1.3 support — Tests all KeyManagerFactory-configured ciphers against the target
-Custom SSL context — Accepts a keystore file (JKS or PKCS12) and password to set the server's identity (dummy purpose only)
-Trust-all mode — Bypasses server certificate validation to focus purely on cipher support
-Categorized output — Marks each cipher as [SUPPORTED] (handshake possible) or [CONNECTION REFUSED] (handshake not possible)
+TLS 1.2 and 1.3 support 
+— Tests all KeyManagerFactory-configured ciphers against the target Custom SSL context 
+— Bypasses server certificate validation to focus purely on cipher support
+
+Categorized output — Marks each cipher as 
+[SUPPORTED] (handshake possible) or 
+[CONNECTION REFUSED] (handshake not possible)
+
 timeout — 2-second default connect/handshake timeout
 
 Command
@@ -17,15 +21,17 @@ java CheckCipher <host> <port> <keystore-file> <keystore-password>
 
 Parameter	Description
 ---------------------
-host	Target hostname or IP address to connect to
-port	Target port number (e.g., 443 for HTTPS)
-keystore-file	Path to the keystore file (JKS or PKCS12 format)
-keystore-password	Password to unlock the keystore
+host=Target hostname or IP address to connect to
+port=Target port number (e.g., 443 for HTTPS)
+keystore-file=Path to the keystore file (JKS or PKCS12 format)
+keystore-password=Password to unlock the keystore
 
 Example
 -------
-java CheckCipher localhost 443 clientPRODKMS.jks ng9oy8JZabcSiZU
+java CheckCipher localhost 443 clientPROD.jks ng9oy8JZabcSiZU
+
 Output Format
+-------------
 Each cipher suite is reported as one of:
 
 Status	Meaning
@@ -41,12 +47,7 @@ Scanning localhost:443 using TLS context...
 [CONNECTION REFUSED] TLS_CHACHA20_POLY1305_SHA256             (TLSv1.3)
 Scan Complete.
 
-Supported JRE
--------------
-JRE Version	Notes
-JRE 8 (Java 8)	Minimum supported version; javax.net.ssl API sufficient for TLS 1.2
-JRE 11+	Recommended; provides TLS 1.3 support via SunJSSE
-JRE 17+	Full support for TLS 1.3 and modern cipher suites
-The tool uses javax.net.ssl.SSLContext.getInstance("TLS") which auto-negotiates the highest supported protocol version (TLSv1.3 if both sides support it, otherwise falls back to TLSv1.2).
+
+
 
 
