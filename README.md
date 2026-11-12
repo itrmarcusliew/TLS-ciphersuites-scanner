@@ -20,9 +20,11 @@ Categorized output — Marks each cipher as
 
 timeout — 2-second default connect/handshake timeout
 
+
 Command
 -------
-java CheckCipher <host> <port> <keystore-file> <keystore-password>
+java CheckCipher "host" "port" "keystore-file" "keystore-password"
+
 
 Parameter	Description
 ---------------------
